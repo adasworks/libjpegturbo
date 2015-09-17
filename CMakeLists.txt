@@ -2,7 +2,7 @@
 # Setup
 #
 
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.7)
 # Use LINK_INTERFACE_LIBRARIES instead of INTERFACE_LINK_LIBRARIES
 if(POLICY CMP0022)
   cmake_policy(SET CMP0022 OLD)
@@ -43,6 +43,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 message(STATUS "VERSION = ${VERSION}, BUILD = ${BUILD}")
+message(STATUS "CMAKE_SIZEOF_VOID_P = ${CMAKE_SIZEOF_VOID_P}")
 
 option(WITH_SIMD "Include SIMD extensions" TRUE)
 option(WITH_ARITH_ENC "Include arithmetic encoding support" TRUE)
@@ -52,6 +53,7 @@ option(WITH_JPEG8 "Emulate libjpeg v8 API/ABI (this makes libjpeg-turbo backward
 option(WITH_MEM_SRCDST "Include in-memory source/destination manager functions when emulating the libjpeg v6b or v7 API/ABI" TRUE)
 option(WITH_TURBOJPEG "Include the TurboJPEG wrapper library and associated test programs" TRUE)
 option(WITH_JAVA "Build Java wrapper for the TurboJPEG library" FALSE)
+option(64BIT "Compile for x64" FALSE)
 option(WITH_12BIT "Encode/decode JPEG images with 12-bit samples (implies WITH_SIMD=0 WITH_TURBOJPEG=0 WITH_ARITH_ENC=0 WITH_ARITH_DEC=0)" FALSE)
 option(ENABLE_STATIC "Build static libraries" TRUE)
 option(ENABLE_SHARED "Build shared libraries" TRUE)
@@ -137,14 +139,18 @@ if(MSVC)
   add_definitions(-W3 -wd4996)
 endif()
 
-# Detect whether compiler is 64-bit
-if(MSVC AND CMAKE_CL_64)
+if(64BIT)
   set(SIMD_X86_64 1)
-  set(64BIT 1)
-elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
-  set(SIMD_X86_64 1)
-  set(64BIT 1)
 endif()
+
+# Detect whether compiler is 64-bit
+#if(MSVC AND CMAKE_CL_64)
+#  set(SIMD_X86_64 1)
+#  set(64BIT 1)
+#elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
+#  set(SIMD_X86_64 1)
+#  set(64BIT 1)
+#endif()
 
 if(64BIT)
   message(STATUS "64-bit build")
@@ -192,7 +198,7 @@ set(JPEG_SOURCES jcapimin.c jcapistd.c jccoefct.c jccolor.c jcdctmgr.c jchuff.c
   jdcoefct.c jdcolor.c jddctmgr.c jdhuff.c jdinput.c jdmainct.c jdmarker.c
   jdmaster.c jdmerge.c jdphuff.c jdpostct.c jdsample.c jdtrans.c jerror.c
   jfdctflt.c jfdctfst.c jfdctint.c jidctflt.c jidctfst.c jidctint.c jidctred.c
-  jquant1.c jquant2.c jutils.c jmemmgr.c jmemnobs.c)
+  jquant1.c jquant2.c jutils.c jmemmgr.c jmemnobs.c transupp.c)
 
 if(WITH_ARITH_ENC OR WITH_ARITH_DEC)
   set(JPEG_SOURCES ${JPEG_SOURCES} jaricom.c)
