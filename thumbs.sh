@@ -67,7 +67,7 @@ l_bin=
 list=
 
 make=
-c_flags=
+c_flags="-D WITH_CRT_DLL"
 cm_tools=
 cm_args=(-DCMAKE_BUILD_TYPE=$tbs_conf)
 
@@ -112,10 +112,10 @@ esac
 case "$tbs_arch" in
 x64)
   [ $tbs_tools = msvc12 ] && cm_tools="$cm_tools Win64"
-  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m64"
+  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m64 -DSIZEOF_SIZE_T=8"
   cm_args+=(-D64BIT=1) ;;
 x86)
-  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m32" ;;
+  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m32 -DSIZEOF_SIZE_T=8" ;;
 esac
 
 # -----------
