@@ -11,6 +11,8 @@ endif()
 project(libjpeg-turbo C)
 set(VERSION 1.4.80)
 
+add_definitions(-DSIZEOF_SIZE_T=${CMAKE_SIZEOF_VOID_P})
+
 if(CYGWIN OR NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
   execute_process(COMMAND "date" "+%Y%m%d" OUTPUT_VARIABLE BUILD)
   string(REGEX REPLACE "\n" "" BUILD ${BUILD})
