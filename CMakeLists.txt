@@ -2,7 +2,7 @@
 # Setup
 #
 
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.8)
 # Use LINK_INTERFACE_LIBRARIES instead of INTERFACE_LINK_LIBRARIES
 if(POLICY CMP0022)
   cmake_policy(SET CMP0022 OLD)
@@ -12,6 +12,8 @@ project(libjpeg-turbo C)
 set(VERSION 1.4.80)
 
 add_definitions(-DSIZEOF_SIZE_T=${CMAKE_SIZEOF_VOID_P})
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 
 if(CYGWIN OR NOT CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
   execute_process(COMMAND "date" "+%Y%m%d" OUTPUT_VARIABLE BUILD)
@@ -255,13 +257,16 @@ if(WITH_TURBOJPEG)
     include_directories(${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
   endif()
 
+  find_library(M_LIBRARY m)
+
+
   if(ENABLE_SHARED)
     add_library(turbojpeg SHARED ${TURBOJPEG_SOURCES})
     set_target_properties(turbojpeg PROPERTIES DEFINE_SYMBOL DLLDEFINE)
     if(MINGW)
       set_target_properties(turbojpeg PROPERTIES LINK_FLAGS -Wl,--kill-at)
     endif()
-    target_link_libraries(turbojpeg jpeg-static)
+    target_link_libraries(turbojpeg jpeg-static ${M_LIBRARY})
     set_target_properties(turbojpeg PROPERTIES LINK_INTERFACE_LIBRARIES "")
 
     add_executable(tjunittest tjunittest.c tjutil.c)
@@ -269,7 +274,7 @@ if(WITH_TURBOJPEG)
 
     add_executable(tjbench tjbench.c bmp.c tjutil.c rdbmp.c rdppm.c wrbmp.c
       wrppm.c)
-    target_link_libraries(tjbench turbojpeg jpeg-static)
+    target_link_libraries(tjbench turbojpeg jpeg-static ${M_LIBRARY})
     set_property(TARGET tjbench PROPERTY COMPILE_FLAGS
       "-DBMP_SUPPORTED -DPPM_SUPPORTED")
   endif()
@@ -289,7 +294,7 @@ if(WITH_TURBOJPEG)
 
     add_executable(tjbench-static tjbench.c bmp.c tjutil.c rdbmp.c rdppm.c
       wrbmp.c wrppm.c)
-    target_link_libraries(tjbench-static turbojpeg-static jpeg-static)
+    target_link_libraries(tjbench-static turbojpeg-static jpeg-static ${M_LIBRARY})
     set_property(TARGET tjbench-static PROPERTY COMPILE_FLAGS
       "-DBMP_SUPPORTED -DPPM_SUPPORTED")
   endif()
