@@ -112,10 +112,9 @@ esac
 case "$tbs_arch" in
 x64)
   [ $tbs_tools = msvc12 ] && cm_tools="$cm_tools Win64"
-  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m64"
-  cm_args+=(-D64BIT=1) ;;
+  [ $tbs_tools = gnu -o $tbs_tools = mingw ];;
 x86)
-  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && c_flags+=" -m32" ;;
+  [ $tbs_tools = gnu -o $tbs_tools = mingw ] && cm_args+=(-DFORCE32=ON) ;;
 esac
 
 # -----------

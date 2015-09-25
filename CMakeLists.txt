@@ -11,7 +11,6 @@ endif()
 project(libjpeg-turbo C)
 set(VERSION 1.4.80)
 
-add_definitions(-DSIZEOF_SIZE_T=${CMAKE_SIZEOF_VOID_P})
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
@@ -143,20 +142,28 @@ if(MSVC)
   add_definitions(-W3 -wd4996)
 endif()
 
-if(64BIT)
-  set(SIMD_X86_64 1)
+# Detect whether compiler is 64-bit
+if(MSVC AND CMAKE_CL_64)
+ set(64BIT 1)
+elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
+ set(64BIT 1)
 endif()
 
-# Detect whether compiler is 64-bit
-#if(MSVC AND CMAKE_CL_64)
-#  set(SIMD_X86_64 1)
-#  set(64BIT 1)
-#elseif(CMAKE_SIZEOF_VOID_P MATCHES 8)
-#  set(SIMD_X86_64 1)
-#  set(64BIT 1)
-#endif()
+option(FORCE32 "Force a 32bit compile on 64bit" OFF)
+if(FORCE32)
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+  add_definitions(-DSIZEOF_SIZE_T=4)
+  set(64BIT OFF)
+else()
+  add_definitions(-DSIZEOF_SIZE_T=${CMAKE_SIZEOF_VOID_P})  
+endif()
+
+
+
 
 if(64BIT)
+  set(SIMD_X86_64 1)
   message(STATUS "64-bit build")
 else()
   message(STATUS "32-bit build")
