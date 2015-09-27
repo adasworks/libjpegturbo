@@ -264,7 +264,9 @@ if(WITH_TURBOJPEG)
     include_directories(${JAVA_INCLUDE_PATH} ${JAVA_INCLUDE_PATH2})
   endif()
 
-  find_library(M_LIBRARY m)
+  if (UNIX)
+    find_library(M_LIBRARY m)
+  endif()
 
 
   if(ENABLE_SHARED)
@@ -273,7 +275,10 @@ if(WITH_TURBOJPEG)
     if(MINGW)
       set_target_properties(turbojpeg PROPERTIES LINK_FLAGS -Wl,--kill-at)
     endif()
-    target_link_libraries(turbojpeg jpeg-static ${M_LIBRARY})
+    target_link_libraries(turbojpeg jpeg-static)
+    if (UNIX)
+      target_link_libraries(turbojpeg ${M_LIBRARY})
+    endif()
     set_target_properties(turbojpeg PROPERTIES LINK_INTERFACE_LIBRARIES "")
 
     add_executable(tjunittest tjunittest.c tjutil.c)
@@ -282,6 +287,10 @@ if(WITH_TURBOJPEG)
     add_executable(tjbench tjbench.c bmp.c tjutil.c rdbmp.c rdppm.c wrbmp.c
       wrppm.c)
     target_link_libraries(tjbench turbojpeg jpeg-static ${M_LIBRARY})
+    if (UNIX)
+      target_link_libraries(tjbench ${M_LIBRARY})
+    endif()
+
     set_property(TARGET tjbench PROPERTY COMPILE_FLAGS
       "-DBMP_SUPPORTED -DPPM_SUPPORTED")
   endif()
@@ -301,7 +310,10 @@ if(WITH_TURBOJPEG)
 
     add_executable(tjbench-static tjbench.c bmp.c tjutil.c rdbmp.c rdppm.c
       wrbmp.c wrppm.c)
-    target_link_libraries(tjbench-static turbojpeg-static jpeg-static ${M_LIBRARY})
+    target_link_libraries(tjbench-static turbojpeg-static jpeg-static)
+    if (UNIX)
+      target_link_libraries(tjbench-static ${M_LIBRARY})
+    endif()
     set_property(TARGET tjbench-static PROPERTY COMPILE_FLAGS
       "-DBMP_SUPPORTED -DPPM_SUPPORTED")
   endif()
