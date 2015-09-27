@@ -81,7 +81,7 @@ msvc12)
   cm_tools="Visual Studio 12"
   [ "$target" = "" ] && mstrg="libjpeg-turbo.sln" || mstrg="$target.vcxproj"
   make="msbuild.exe $mstrg //p:Configuration=$tbs_conf //v:m"
-  l_slib="./build/$tbs_conf/jpeg_static.lib ./build/$tbs_conf/turbojpeg_static.lib"
+  l_slib="./build/$tbs_conf/jpeg-static.lib ./build/$tbs_conf/turbojpeg-static.lib"
   l_dlib="./build/sharedlib/$tbs_conf/jpeg.lib ./build/$tbs_conf/turbojpeg.lib"
   l_bin="./build/sharedlib/$tbs_conf/jpeg62.dll ./build/$tbs_conf/turbojpeg.dll"
   list="$l_bin $l_slib $l_dlib $l_inc" ;;
