@@ -13,8 +13,5 @@ Last build:
 
 ### Travis build
 
-[![Build Status](https://travis-ci.org/imazen/libjpeg-turbo.svg)](https://travis-ci.org/imazen/libjpeg-turbo)
+[![Build Status](https://api.travis-ci.org/imazen/libjpeg-turbo.svg?branch=master)](https://travis-ci.org/imazen/libjpeg-turbo)
 
-### Drone.io build
-
-[![Build Status](https://drone.io/github.com/imazen/libjpeg-turbo/status.png)](https://drone.io/github.com/imazen/libjpeg-turbo)
