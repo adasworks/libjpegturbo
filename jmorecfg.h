@@ -153,6 +153,7 @@ typedef short INT16;
 #ifndef _BASETSD_H_		/* Microsoft defines it in basetsd.h */
 #ifndef _BASETSD_H		/* MinGW is slightly different */
 #ifndef QGLOBAL_H		/* Qt defines it in qglobal.h */
+#define __INT32_IS_ACTUALLY_LONG
 typedef long INT32;
 #endif
 #endif
