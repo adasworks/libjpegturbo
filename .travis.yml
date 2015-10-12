@@ -1,0 +1,22 @@
+language: cpp
+
+env:
+  - tbs_arch=x86
+  - tbs_arch=x64
+
+os:
+  - linux
+#  - osx
+
+before_install:
+  - sudo add-apt-repository --yes ppa:kalakris/cmake
+  - sudo apt-get update -qq
+  - sudo apt-get -y install nasm cmake
+  - if [ "$tbs_arch" = "x86" ];
+    then
+      sudo apt-get -y install gcc-multilib g++-multilib libc6-dev:i386 build-essential;
+    fi
+
+script:
+  - ./thumbs.sh make
+  - ./thumbs.sh check
