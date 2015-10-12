@@ -1,9 +1,12 @@
 /*
  * jfdctint.c
  *
+ * This file was part of the Independent JPEG Group's software.
  * Copyright (C) 1991-1996, Thomas G. Lane.
- * This file is part of the Independent JPEG Group's software.
- * For conditions of distribution and use, see the accompanying README file.
+ * libjpeg-turbo Modifications:
+ * Copyright (C) 2015, D. R. Commander
+ * For conditions of distribution and use, see the accompanying README.ijg
+ * file.
  *
  * This file contains a slow-but-accurate integer implementation of the
  * forward DCT (Discrete Cosine Transform).

@@ -4,9 +4,10 @@
  * This file was part of the Independent JPEG Group's software:
  * Copyright (C) 1991-1997, Thomas G. Lane.
  * Modified 1997-2009 by Guido Vollbeding.
- * It was modified by The libjpeg-turbo Project to include only code relevant
- * to libjpeg-turbo.
- * For conditions of distribution and use, see the accompanying README file.
+ * libjpeg-turbo Modifications:
+ * Copyright (C) 2015, D. R. Commander
+ * For conditions of distribution and use, see the accompanying README.ijg
+ * file.
  *
  * This file provides common declarations for the various JPEG modules.
  * These declarations are considered internal to the JPEG library; most
