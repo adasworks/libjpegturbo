@@ -21,9 +21,8 @@
  */
 
 /* If you happen not to want the image transform support, disable it here */
-#ifndef TRANSFORMS_SUPPORTED
 #define TRANSFORMS_SUPPORTED 1          /* 0 disables transform code */
-#endif
+
 
 /*
  * Although rotating and flipping data expressed as DCT coefficients is not
