@@ -996,4 +996,4 @@ install(FILES ${CMAKE_BINARY_DIR}/jconfig.h ${CMAKE_SOURCE_DIR}/jerror.h
   ${CMAKE_SOURCE_DIR}/jmorecfg.h ${CMAKE_SOURCE_DIR}/jpeglib.h
   DESTINATION include)
 
-install(EXPORT libjpeg-turbo-targets DESTINATION lib/cmake/jpeg NAMESPACE jpeg:: FILE jpeg-config.cmake)
+install(EXPORT libjpeg-turbo-targets DESTINATION lib/cmake/libjpeg-turbo NAMESPACE jpeg:: FILE libjpeg-turbo-config.cmake)
