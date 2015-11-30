@@ -965,7 +965,7 @@ if(WITH_TURBOJPEG)
   if(ENABLE_STATIC)
     install(TARGETS turbojpeg-static EXPORT libjpeg-turbo-targets ARCHIVE DESTINATION lib)
     if(NOT ENABLE_SHARED)
-      install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/tjbench-static${CMAKE_EXECUTABLE_SUFFIX}
+      install(PROGRAMS $<TARGET_FILE:tjbench-static>
         DESTINATION bin RENAME tjbench${CMAKE_EXECUTABLE_SUFFIX})
     endif()
   endif()
@@ -975,11 +975,11 @@ endif()
 if(ENABLE_STATIC)
   install(TARGETS jpeg-static EXPORT libjpeg-turbo-targets ARCHIVE DESTINATION lib)
   if(NOT ENABLE_SHARED)
-    install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/cjpeg-static${CMAKE_EXECUTABLE_SUFFIX}
+    install(PROGRAMS $<TARGET_FILE:cjpeg-static>
       DESTINATION bin RENAME cjpeg${CMAKE_EXECUTABLE_SUFFIX})
-    install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/djpeg-static${CMAKE_EXECUTABLE_SUFFIX}
+    install(PROGRAMS $<TARGET_FILE:djpeg-static>
       DESTINATION bin RENAME djpeg${CMAKE_EXECUTABLE_SUFFIX})
-    install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/jpegtran-static${CMAKE_EXECUTABLE_SUFFIX}
+    install(PROGRAMS $<TARGET_FILE:jpegtran-static>
       DESTINATION bin RENAME jpegtran${CMAKE_EXECUTABLE_SUFFIX})
   endif()
 endif()
