@@ -1,5 +1,9 @@
 if(NOT DEFINED NASM)
-  set(NASM nasm CACHE PATH "Path to NASM/YASM executable")
+  find_program(NASM nasm)
+  if (NOT NASM)
+    set(NASM nasm CACHE PATH "Path to NASM/YASM executable")
+  endif()
+  message(STATUS "nasm executable: ${NASM}")
 endif()
 
 if(WIN32)
