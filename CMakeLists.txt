@@ -61,8 +61,9 @@ option(64BIT "Compile for x64" FALSE)
 option(WITH_12BIT "Encode/decode JPEG images with 12-bit samples (implies WITH_SIMD=0 WITH_TURBOJPEG=0 WITH_ARITH_ENC=0 WITH_ARITH_DEC=0)" FALSE)
 option(ENABLE_STATIC "Build static libraries" TRUE)
 option(ENABLE_SHARED "Build shared libraries" TRUE)
-if(CMAKE_CROSSCOMPILING)
-  message(STATUS "Disable SIMD when Cross-compiling")
+if(CMAKE_CROSSCOMPILING
+  OR NOT CMAKE_SYSTEM_PROCESSOR MATCHES "[aA][mM][dD]64.*|[iI][0-9]86.*|[xX]86.*")
+  message(STATUS "Disable SIMD when Cross-compiling or on non-x86-like architecture")
   set(WITH_SIMD FALSE)
 endif()
 
